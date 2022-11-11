@@ -7,6 +7,9 @@
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,13 +54,13 @@ public class NewFXMain extends Application {
         ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4");
         
         
-        Label userName = new Label("Monthly Payment:");
-        grid.add(userName, 0, 1);
+        Label mp = new Label("Monthly Payment:");
+        grid.add(mp, 0, 1);
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
-        Label pw = new Label("Interest Rate:");
-        grid.add(pw, 0, 2);
-        PasswordField pwBox = new PasswordField();
+        Label interest = new Label("Interest Rate:");
+        grid.add(interest, 0, 2);
+        TextField pwBox = new TextField();
         grid.add(pwBox, 1, 2);
         
         Label warning = new Label("Enter 11.1% as 11.1:");
@@ -76,9 +79,35 @@ public class NewFXMain extends Application {
         Button clear = new Button();
         clear.setText("Clear");
         
+        //textArea
+        TextArea text = new TextArea();
+        grid.add(text,1,6);
+        
         //Calculate
         Button calculate = new Button();
         calculate.setText("Calculate");
+        
+       calculate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                int pay = Integer.parseInt(userTextField.getText());
+                
+                double interest = Integer.parseInt(pwBox.getText());
+                
+                //combobox value
+                int selectedIndex = yearCombo.getSelectionModel().getSelectedIndex();
+                int data = selectedIndex + 1;
+                
+                double output =pay*interest * data;
+                text.setText("The interest for this payment is "+String.valueOf(output));
+  
+                
+                
+                
+                
+            }
+        });
+        
+       
         
         HBox actionBtnContainer = new HBox();
         actionBtnContainer.setPadding(new Insets(15,0,15,30));
@@ -88,9 +117,7 @@ public class NewFXMain extends Application {
         
         grid.add(actionBtnContainer, 1, 5);
         
-        //textArea
-        TextArea text = new TextArea();
-        grid.add(text,1,6);
+        
         
         
         
